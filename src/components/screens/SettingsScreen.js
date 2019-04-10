@@ -22,6 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 // AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
+import Feather from '@expo/vector-icons/Feather';
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -86,7 +87,7 @@ export default class SettingsScreen extends React.Component {
                   </View>
                   {/* Old password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
+                    <Feather style={styles.iconStyle} name="lock" />
                     <Input
                       style={styles.input}
                       placeholder='Old password'
@@ -101,7 +102,7 @@ export default class SettingsScreen extends React.Component {
                   </Item>
                   {/* New password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
+                    <Feather style={styles.iconStyle} name="lock" />
                     <Input
                       style={styles.input}
                       placeholder='New password'
@@ -128,9 +129,9 @@ export default class SettingsScreen extends React.Component {
                     onPress={this.signOutAlert}>
                     <Ionicons
                       name="md-power"
-                      style={{ color: '#fff', marginRight: 10, fontSize: 24 }}
+                      style={{ color: '#666', marginRight: 10, fontSize: 24 }}
                     />
-                    <Text style={styles.buttonTextStyle}>
+                    <Text style={styles.signOutButtonTextStyle}>
                       Sign out
                     </Text>
                   </TouchableOpacity>
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     color: '#666',
-    fontSize: 28,
+    fontSize: 24,
     marginRight: 15
   },
   buttonStyle: {
@@ -188,15 +189,21 @@ const styles = StyleSheet.create({
   signOutButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 100
+    marginBottom: 40
   },
   signOutButtonStyle: {
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 8,
     width: '100%',
-    backgroundColor: '#ccc',
+    backgroundColor: '#fff',
     borderRadius: 99,
+  },
+  signOutButtonTextStyle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    padding: 10,
+    color: '#666'
   },
   buttonTextStyle: {
     fontWeight: 'bold',

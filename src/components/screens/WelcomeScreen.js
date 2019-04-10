@@ -24,6 +24,7 @@ import {
   Item,
   Input,
 } from 'native-base'
+import Feather from '@expo/vector-icons/Feather';
 
 export default class WelcomeScreen extends React.Component {
   state = {
@@ -109,11 +110,11 @@ export default class WelcomeScreen extends React.Component {
                 <View style={{ flex: 1 }}>
                   <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                      <Image source={require('../../../assets/images/firebase.png')} />
-                      <Text style={{ fontSize: 21 }}>Login with Firebase</Text>
+                      <Image source={require('../../../assets/images/amplify.jpg')} />
+                      <Text style={{ fontSize: 21 }}>Login with Amplify</Text>
                     </View>
                     <Item style={styles.itemStyle}>
-                      <Ionicons name="ios-person" style={styles.iconStyle} />
+                      <Feather name="user" style={styles.iconStyle} />
                       <Input
                         style={styles.input}
                         placeholder='Username'
@@ -129,7 +130,7 @@ export default class WelcomeScreen extends React.Component {
                       />
                     </Item>
                     <Item style={styles.itemStyle}>
-                      <Ionicons style={styles.iconStyle} name="ios-lock" />
+                      <Feather style={styles.iconStyle} name="lock" />
                       <Input
                         style={styles.input}
                         placeholder='Password'
@@ -234,12 +235,13 @@ const styles = StyleSheet.create({
   },
   modalBk: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0, 0.9)',
+    backgroundColor: 'rgba(255,255,255, 0.95)',
     paddingHorizontal: 25,
     justifyContent: 'center'
   },
   modalWindow: {
-    backgroundColor: 'white', width: '100%', height: 340,
+    backgroundColor: 'white',
+    width: '100%', height: 360,
     borderRadius: 15,
     padding: 10,
     shadowColor: '#000',
@@ -263,7 +265,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 14,
     padding: 10,
-    color: '#fff'
+    color: '#666'
   },
   buttonTextStyle: {
     fontWeight: 'bold',
@@ -282,7 +284,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     color: '#666',
-    fontSize: 30,
+    fontSize: 24,
     marginRight: 15
   },
   leftButton: {

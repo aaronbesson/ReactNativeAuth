@@ -145,7 +145,7 @@ const AuthStackNavigator = createStackNavigator({
   SignUp: {
     screen: SignUpScreen,
     navigationOptions: () => ({
-      title: `Create a new account`,
+      title: null,
       headerBackTitle: 'Back',
       headerStyle: {
         borderBottomWidth: 0,

@@ -8,11 +8,13 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Keyboard,
+  Image,
   View,
   Alert,
   Modal,
   Platform,
   FlatList,
+  ScrollView,
   Animated,
 } from 'react-native'
 
@@ -29,6 +31,7 @@ import Auth from '@aws-amplify/auth'
 
 // Import data for countries
 import data from '../countriesData'
+import Feather from '@expo/vector-icons/Feather';
 
 // Load the app logo
 const logo = require('../images/logo.png')
@@ -180,18 +183,23 @@ export default class SignUpScreen extends React.Component {
     let { fadeOut, fadeIn, isHidden, flag } = this.state
     const countryData = data
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        style={{ flex: 1 }}
-      >
-        <SafeAreaView style={styles.container}>
-          <StatusBar />
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar />
+        <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
 
-          <TouchableWithoutFeedback style={{ flex: 1, paddingTop: 20, }} onPress={Keyboard.dismiss}>
+          <ScrollView style={{ flex: 1, paddingTop: 0, }} onPress={Keyboard.dismiss}>
+
+            <View style={{ alignItems: 'center', marginBottom: 20 }}>
+              <Image source={require('../../../assets/images/amplify.jpg')} />
+              <Text style={{ fontSize: 21 }}>Create Account with Amplify</Text>
+            </View>
+
+
+
             <View style={{ flex: 1, paddingHorizontal: 20, }}>
               {/* username section  */}
               <Item style={styles.itemStyle}>
-                <Ionicons name="ios-person" style={styles.iconStyle} />
+                <Feather name="user" style={styles.iconStyle} />
                 <Input
                   style={styles.input}
                   placeholder='Username'
@@ -208,7 +216,7 @@ export default class SignUpScreen extends React.Component {
               </Item>
               {/*  password section  */}
               <Item style={styles.itemStyle}>
-                <Ionicons name="ios-lock" style={styles.iconStyle} />
+                <Feather name="lock" style={styles.iconStyle} />
                 <Input
                   style={styles.input}
                   placeholder='Password'
@@ -227,7 +235,7 @@ export default class SignUpScreen extends React.Component {
               </Item>
               {/* email section */}
               <Item style={styles.itemStyle}>
-                <Ionicons name="ios-mail" style={styles.iconStyle} />
+                <Feather name="mail" style={styles.iconStyle} />
                 <Input
                   style={styles.input}
                   placeholder='Email'
@@ -246,7 +254,7 @@ export default class SignUpScreen extends React.Component {
               </Item>
               {/* phone section  */}
               <Item style={styles.itemStyle}>
-                <Ionicons name="ios-call" style={styles.iconStyle} />
+                <Feather name="phone" style={styles.iconStyle} />
                 {/* country flag */}
                 <TouchableOpacity
                   onPress={() => this.showModal()}
@@ -344,7 +352,7 @@ export default class SignUpScreen extends React.Component {
                 style={{ flex: 1 }}
               />
               <Item style={styles.itemStyle}>
-                <Ionicons name="md-apps" style={styles.iconStyle} />
+                <Feather name="grid" style={styles.iconStyle} />
                 <Input
                   style={styles.input}
                   placeholder='Confirmation code'
@@ -387,10 +395,10 @@ export default class SignUpScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </TouchableWithoutFeedback>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
 
-        </SafeAreaView>
-      </KeyboardAvoidingView>
     )
   }
 }
@@ -398,7 +406,7 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 10,
     backgroundColor: '#fff',
     justifyContent: 'center',
     flexDirection: 'column'
@@ -443,8 +451,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     padding: 5,
-    fontSize: 24,
-    color: '#fff',
+    fontSize: 14,
+    color: '#666',
     fontWeight: 'bold'
   },
   countryStyle: {
