@@ -7,12 +7,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "aws-amplify": "^1.1.17",
-    "aws-amplify-react-native": "^2.1.5",
+    "aws-amplify": "^1.1.25",
+    "aws-amplify-react-native": "^2.1.10",
     "expo": "^31.0.2",
     "native-base": "2.8.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native-onboarding-swiper": "^1.0.1",
     "react-navigation": "2.8.0"
   },
   "devDependencies": {

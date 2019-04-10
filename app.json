@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RNAmplifyAuth",
-    "slug": "RNAmplifyAuth",
+    "name": "Plusher",
+    "slug": "plusher-minimal",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -23,6 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

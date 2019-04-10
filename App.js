@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native'
 
-import { 
-  createSwitchNavigator, 
-  createStackNavigator ,
+import {
+  createSwitchNavigator,
+  createStackNavigator,
   createDrawerNavigator,
   createMaterialTopTabNavigator
 } from 'react-navigation'
@@ -25,6 +25,7 @@ import ProfileScreen from './src/components/screens/ProfileScreen'
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
 import config from './src/aws-exports'
+import Feather from '@expo/vector-icons/Feather';
 Amplify.configure(config)
 
 // Configurations and options for the AppTabNavigator
@@ -34,16 +35,16 @@ const configurations = {
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-home" />
+        <Feather style={{ fontSize: 24, color: tintColor }} name="home" />
       )
-    }
+    },
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: 'Profile',
-      tabBarIcon: ({tintColor}) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-person" />
+      tabBarIcon: ({ tintColor }) => (
+        <Feather style={{ fontSize: 24, color: tintColor }} name="user" />
       )
     }
   },
@@ -52,7 +53,7 @@ const configurations = {
     navigationOptions: {
       tabBarLabel: 'Settings',
       tabBarIcon: ({ tintColor }) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-settings" />
+        <Feather style={{ fontSize: 24, color: tintColor }} name="settings" />
       )
     }
   },
@@ -60,26 +61,28 @@ const configurations = {
 
 const options = {
   tabBarPosition: 'bottom',
-  swipeEnabled: true,
-  animationEnabled: true,
+  swipeEnabled: false,
+  animationEnabled: false,
   navigationOptions: {
     tabBarVisible: true
   },
   tabBarOptions: {
-    showLabel: true,
-    activeTintColor: '#fff',
-    inactiveTintColor: '#fff9',
+    showLabel: false,
+    activeTintColor: '#1F28CF',
+    inactiveTintColor: '#666',
     style: {
-      backgroundColor: '#f16f69',
+      backgroundColor: '#fff',
+      paddingBottom: 10
     },
     labelStyle: {
       fontSize: 12,
       fontWeight: 'bold',
       marginBottom: 12,
-      marginTop:12,
+      marginTop: 12,
     },
     indicatorStyle: {
-      height: 0,
+      height: 8,
+      backgroundColor: '#1F28CF'
     },
     showIcon: true,
   }
@@ -101,21 +104,25 @@ const AppStackNavigator = createStackNavigator({
   Header: {
     screen: AppTabNavigator,
     // Set the header icon
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        borderBottomWidth: 0,
+        backgroundColor: '#fff'
+      },
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <View style={{paddingHorizontal: 10}}>
+          <View style={{ paddingHorizontal: 10 }}>
             <Ionicons size={24} name="md-menu" />
           </View>
         </TouchableOpacity>
       )
     })
-  }    
+  }
 })
 
 // App stack for the drawer
 const AppDrawerNavigator = createDrawerNavigator({
-  Tabs: AppStackNavigator, // defined above
+  Sidebar: AppStackNavigator, // defined above
   Home: HomeScreen,
   Profile: ProfileScreen,
   Settings: SettingsScreen
@@ -126,26 +133,49 @@ const AuthStackNavigator = createStackNavigator({
   Welcome: {
     screen: WelcomeScreen,
     navigationOptions: () => ({
-      title: `Welcome to this App`, // for the header screen
-      headerBackTitle: 'Back'
+      title: `Welcome to Amplify`, // for the header screen
+      headerBackTitle: 'Back',
+      headerStyle: {
+        borderBottomWidth: 0,
+        backgroundColor: '#fff',
+        display: 'none',
+      },
     }),
   },
   SignUp: {
     screen: SignUpScreen,
     navigationOptions: () => ({
       title: `Create a new account`,
+      headerBackTitle: 'Back',
+      headerStyle: {
+        borderBottomWidth: 0,
+        backgroundColor: '#fff',
+        // display: 'none',
+      },
     }),
   },
   SignIn: {
     screen: SignInScreen,
     navigationOptions: () => ({
       title: `Log in to your account`,
+      headerBackTitle: 'Back',
+      headerStyle: {
+        borderBottomWidth: 0,
+        backgroundColor: '#fff',
+        // display: 'none',
+      },
     }),
   },
   ForgetPassword: {
     screen: ForgetPasswordScreen,
     navigationOptions: () => ({
       title: `Create a new password`,
+      headerBackTitle: 'Back',
+      headerStyle: {
+        borderBottomWidth: 0,
+        backgroundColor: '#fff',
+        // display: 'none',
+      },
     }),
   },
 })

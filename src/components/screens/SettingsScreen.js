@@ -37,19 +37,19 @@ export default class SettingsScreen extends React.Component {
   changePassword = async () => {
     const { password1, password2 } = this.state
     await Auth.currentAuthenticatedUser()
-    .then(user => {
-      return Auth.changePassword(user, password1, password2)
-    })
-    .then(data => console.log('Password changed successfully', data))
-    .catch(err => {
-      if (! err.message) {
-        console.log('Error changing password: ', err)
-        Alert.alert('Error changing password: ', err)
-      } else {
-        console.log('Error changing password: ', err.message)
-        Alert.alert('Error changing password: ', err.message)
-      }
-    })
+      .then(user => {
+        return Auth.changePassword(user, password1, password2)
+      })
+      .then(data => console.log('Password changed successfully', data))
+      .catch(err => {
+        if (!err.message) {
+          console.log('Error changing password: ', err)
+          Alert.alert('Error changing password: ', err)
+        } else {
+          console.log('Error changing password: ', err.message)
+          Alert.alert('Error changing password: ', err.message)
+        }
+      })
   }
   // Sign out from the app
   signOutAlert = async () => {
@@ -57,32 +57,32 @@ export default class SettingsScreen extends React.Component {
       'Sign Out',
       'Are you sure you want to sign out from the app?',
       [
-        {text: 'Cancel', onPress: () => console.log('Canceled'), style: 'cancel'},
-        {text: 'OK', onPress: () => this.signOut()},
+        { text: 'Cancel', onPress: () => console.log('Canceled'), style: 'cancel' },
+        { text: 'OK', onPress: () => this.signOut() },
       ],
       { cancelable: false }
     )
   }
   signOut = async () => {
     await Auth.signOut()
-    .then(() => {
-      console.log('Sign out complete')
-      this.props.navigation.navigate('Authloading')
-    })
-    .catch(err => console.log('Error while signing out!', err))
+      .then(() => {
+        console.log('Sign out complete')
+        this.props.navigation.navigate('Authloading')
+      })
+      .catch(err => console.log('Error while signing out!', err))
   }
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar/>
+        <StatusBar />
         <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               {/*Infos*/}
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  <View style={[styles.buttonStyle, {borderRadius: 4, marginBottom: 20}]}>
-                    <Text style={styles.buttonText}>Change password</Text>              
+                  <View style={{ borderRadius: 4, marginBottom: 20 }}>
+                    <Text style={{ fontSize: 21 }}>Change your password</Text>
                   </View>
                   {/* Old password */}
                   <Item style={styles.itemStyle}>
@@ -98,8 +98,8 @@ export default class SettingsScreen extends React.Component {
                       onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
                       onChangeText={value => this.onChangeText('password1', value)}
                     />
-                  </Item>    
-                  {/* New password */}              
+                  </Item>
+                  {/* New password */}
                   <Item style={styles.itemStyle}>
                     <Ionicons style={styles.iconStyle} name="ios-lock" />
                     <Input
@@ -117,20 +117,20 @@ export default class SettingsScreen extends React.Component {
                   <TouchableOpacity
                     onPress={this.changePassword}
                     style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>
+                    <Text style={styles.buttonTextStyle}>
                       Submit
                     </Text>
                   </TouchableOpacity>
-                  <View 
-                    style={{justifyContent: 'center', alignItems: 'center', marginBottom: 100}}/>
+                  <View
+                    style={styles.signOutButton} />
                   <TouchableOpacity
-                    style={[styles.buttonStyle, {flexDirection: 'row', justifyContent: 'center'}]}
+                    style={[styles.signOutButtonStyle, { flexDirection: 'row', justifyContent: 'center' }]}
                     onPress={this.signOutAlert}>
-                    <Ionicons 
-                      name="md-power" 
-                      style={{color: '#fff', marginRight: 10, fontSize: 24}}
+                    <Ionicons
+                      name="md-power"
+                      style={{ color: '#fff', marginRight: 10, fontSize: 24 }}
                     />
-                    <Text style={styles.buttonText}>
+                    <Text style={styles.buttonTextStyle}>
                       Sign out
                     </Text>
                   </TouchableOpacity>
@@ -147,7 +147,7 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#666',
   },
   infoContainer: {
     position: 'absolute',
@@ -166,26 +166,48 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: '#fff',
   },
   itemStyle: {
     marginTop: 20,
   },
   iconStyle: {
-    color: '#fff',
+    color: '#666',
     fontSize: 28,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
-    padding: 14,
-    marginTop: 20,
-    borderRadius: 3,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    width: '100%',
+    backgroundColor: '#1F28CF',
+    borderRadius: 99,
+    marginTop: 25
   },
-  buttonText: {
-    fontSize: 18,
+  signOutButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 100
+  },
+  signOutButtonStyle: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    width: '100%',
+    backgroundColor: '#ccc',
+    borderRadius: 99,
+  },
+  buttonTextStyle: {
     fontWeight: 'bold',
-    color: "#fff",
+    fontSize: 18,
+    padding: 10,
+    color: '#fff'
+  },
+  textStyle: {
+    fontWeight: '700',
+    fontSize: 14,
+    padding: 10,
+    color: '#fff'
   },
 })

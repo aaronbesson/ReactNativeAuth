@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -18,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   Container,
   Item,
-  Input
+  Input,
 } from 'native-base'
 
 // AWS Amplify modular import
@@ -32,7 +33,7 @@ export default class SignInScreen extends React.Component {
     username: '',
     password: '',
     fadeIn: new Animated.Value(0),
-    fadeOut: new Animated.Value(0),  
+    fadeOut: new Animated.Value(0),
     isHidden: false
   }
   componentDidMount() {
@@ -47,7 +48,7 @@ export default class SignInScreen extends React.Component {
         useNativeDriver: true
       }
     ).start()
-    this.setState({isHidden: true})
+    this.setState({ isHidden: true })
   }
   fadeOut() {
     Animated.timing(
@@ -58,7 +59,7 @@ export default class SignInScreen extends React.Component {
         useNativeDriver: true
       }
     ).start()
-    this.setState({isHidden: false})
+    this.setState({ isHidden: false })
   }
   onChangeText(key, value) {
     this.setState({
@@ -69,88 +70,90 @@ export default class SignInScreen extends React.Component {
   async signIn() {
     const { username, password } = this.state
     await Auth.signIn(username, password)
-    .then(user => {
-      this.setState({ user })
-      this.props.navigation.navigate('Authloading')
-    })
-    .catch(err => {
-      if (! err.message) {
-        console.log('Error when signing in: ', err)
-        Alert.alert('Error when signing in: ', err)
-      } else {
-        console.log('Error when signing in: ', err.message)
-        Alert.alert('Error when signing in: ', err.message)
-      }
-    })
+      .then(user => {
+        this.setState({ user })
+        this.props.navigation.navigate('Authloading')
+      })
+      .catch(err => {
+        if (!err.message) {
+          console.log('Error when signing in: ', err)
+          Alert.alert('Error when signing in: ', err)
+        } else {
+          console.log('Error when signing in: ', err.message)
+          Alert.alert('Error when signing in: ', err.message)
+        }
+      })
+  }
+  handleRoute = async (destination) => {
+    await this.props.navigation.navigate(destination)
   }
   render() {
     let { fadeOut, fadeIn, isHidden } = this.state
     return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar/>
-        <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-          <TouchableWithoutFeedback 
-            style={styles.container} 
-            onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-              {/* App Logo */}
-              <View style={styles.logoContainer}>
-                {
-                  isHidden ?
-                  <Animated.Image 
-                      source={logo} 
-                      style={{ opacity: fadeIn, width: 160, height: 167 }}/>
-                  :
-                  <Animated.Image 
-                      source={logo} 
-                      style={{ opacity: fadeOut, width: 120, height: 127 }}/>
-                }
-              </View>
-              <Container style={styles.infoContainer}>
-                <View style={styles.container}>
-                  <Item style={styles.itemStyle}>
-                    <Ionicons name="ios-person" style={styles.iconStyle} />
-                    <Input
-                      style={styles.input}
-                      placeholder='Username'
-                      placeholderTextColor='#adb4bc'
-                      keyboardType={'email-address'}
-                      returnKeyType='next'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      onSubmitEditing={(event) => {this.refs.SecondInput._root.focus()}}
-                      onChangeText={value => this.onChangeText('username', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
-                    />
-                  </Item>
-                  <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
-                    <Input
-                      style={styles.input}
-                      placeholder='Password'
-                      placeholderTextColor='#adb4bc'
-                      returnKeyType='go'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={true}
-                      ref='SecondInput'
-                      onChangeText={value => this.onChangeText('password', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
-                    />
-                  </Item>
-                  <TouchableOpacity
-                    onPress={() => this.signIn()}
-                    style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>
-                      Sign In
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar />
+        <KeyboardAvoidingView style={{ flex: 1, }} behavior='padding' enabled>
+          <View style={styles.container}>
+            <Container style={styles.infoContainer}>
+              <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                  <Image source={require('../../../assets/images/firebase.png')} />
+                  <Text style={{ fontSize: 21 }}>Firebase Login</Text>
+                </View>
+                <Item style={styles.itemStyle}>
+                  <Ionicons name="ios-person" style={styles.iconStyle} />
+                  <Input
+                    style={styles.input}
+                    placeholder='Username'
+                    placeholderTextColor='#adb4bc'
+                    keyboardType={'email-address'}
+                    returnKeyType='next'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
+                    onChangeText={value => this.onChangeText('username', value)}
+                    onFocus={() => this.fadeOut()}
+                    onEndEditing={() => this.fadeIn()}
+                  />
+                </Item>
+                <Item style={styles.itemStyle}>
+                  <Ionicons style={styles.iconStyle} name="ios-lock" />
+                  <Input
+                    style={styles.input}
+                    placeholder='Password'
+                    placeholderTextColor='#adb4bc'
+                    returnKeyType='go'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    secureTextEntry={true}
+                    ref='SecondInput'
+                    onChangeText={value => this.onChangeText('password', value)}
+                    onFocus={() => this.fadeOut()}
+                    onEndEditing={() => this.fadeIn()}
+                  />
+                </Item>
+                <TouchableOpacity
+                  onPress={() => this.signIn()}
+                  style={styles.buttonStyle}>
+                  <Text style={styles.buttonText}>
+                    Sign In
                     </Text>
+                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                  <TouchableOpacity
+                    onPress={() => this.handleRoute('SignUp')}
+                    style={styles.leftButton}>
+                    <Text style={styles.textStyle}>Register Now</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.handleRoute('ForgetPassword')}
+                    style={styles.rightButton}>
+                    <Text style={styles.textStyle}>Forget password?</Text>
                   </TouchableOpacity>
                 </View>
-              </Container>
-            </View>
-          </TouchableWithoutFeedback>
+              </View>
+            </Container>
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     )
@@ -159,47 +162,36 @@ export default class SignInScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    padding: 20,
+    flexDirection: 'column',
   },
   input: {
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
-  },
-  infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 200,
-    bottom: 25,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    color: '#646464',
   },
   itemStyle: {
     marginBottom: 20,
   },
   iconStyle: {
-    color: '#fff',
+    color: '#666',
     fontSize: 30,
     marginRight: 15
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
-    padding: 14,
-    marginBottom: 20,
-    borderRadius: 3,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    width: '100%',
+    backgroundColor: '#1F28CF',
+    borderRadius: 99,
   },
   buttonText: {
-    fontSize: 18,
     fontWeight: 'bold',
-    color: "#fff",
+    fontSize: 18,
+    padding: 10,
+    color: '#fff'
   },
   logoContainer: {
     position: 'absolute',
@@ -211,4 +203,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  leftButton: {
+    width: '50%',
+    alignItems: 'center'
+  },
+  rightButton: {
+    width: '50%',
+    alignItems: 'center'
+  }
 })
